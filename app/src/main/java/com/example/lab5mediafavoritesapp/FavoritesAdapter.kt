@@ -1,58 +1,56 @@
 /*
- * Course: MAD204 - Lab 5
+ * Course: MAD204-01 Java Development for MA - Lab 5
  * Student: Darshilkumar Karkar (A00203357)
  * Date: 2025-12-11
- * Description: RecyclerView Adapter for displaying favorites.
+ * Description: RecyclerView adapter for displaying the list of favorite media.
  */
-
 package com.example.lab5mediafavoritesapp
 
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class FavoritesAdapter(
-    private val onDeleteClick: (FavoriteMedia) -> Unit,
-    private val onItemClick: (FavoriteMedia) -> Unit
-) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
+    private val onItemClick: (FavoriteMedia) -> Unit,
+    private val onDeleteClick: (FavoriteMedia) -> Unit
+) : ListAdapter<FavoriteMedia, FavoritesAdapter.FavoriteViewHolder>(FavoriteDiffCallback()) {
 
-    private var items = listOf<FavoriteMedia>()
-
-    fun submitList(newItems: List<FavoriteMedia>) {
-        items = newItems
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_favorite, parent, false)
+        return FavoriteViewHolder(view)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val icon: ImageView = view.findViewById(R.id.itemIcon)
-        val type: TextView = view.findViewById(R.id.itemType)
-        val delete: ImageButton = view.findViewById(R.id.btnDelete)
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        holder.bind(getItem(position), onItemClick, onDeleteClick)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_favorite, parent, false)
-        return ViewHolder(view)
-    }
+    class FavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val mediaIcon: ImageView = itemView.findViewById(R.id.mediaIcon)
+        private val mediaUriText: TextView = itemView.findViewById(R.id.mediaUriText)
+        private val deleteButton: ImageView = itemView.findViewById(R.id.btnDelete)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        holder.type.text = "Type: ${item.type.uppercase()}"
-
-        try {
-            holder.icon.setImageURI(Uri.parse(item.uri))
-        } catch (e: Exception) {
-            holder.icon.setImageResource(android.R.drawable.ic_menu_report_image)
+        fun bind(
+            media: FavoriteMedia,
+            onItemClick: (FavoriteMedia) -> Unit,
+            onDeleteClick: (FavoriteMedia) -> Unit
+        ) {
+            mediaUriText.text = Uri.parse(media.uri).lastPathSegment // Show a cleaner name
+            mediaIcon.setImageResource(
+                if (media.type == "image") R.drawable.ic_image else R.drawable.ic_video
+            )
+            itemView.setOnClickListener { onItemClick(media) }
+            deleteButton.setOnClickListener { onDeleteClick(media) }
         }
-
-        holder.delete.setOnClickListener { onDeleteClick(item) }
-        holder.itemView.setOnClickListener { onItemClick(item) }
     }
+}
 
-    override fun getItemCount() = items.size
+class FavoriteDiffCallback : DiffUtil.ItemCallback<FavoriteMedia>() {
+    override fun areItemsTheSame(oldItem: FavoriteMedia, newItem: FavoriteMedia) = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: FavoriteMedia, newItem: FavoriteMedia) = oldItem == newItem
 }

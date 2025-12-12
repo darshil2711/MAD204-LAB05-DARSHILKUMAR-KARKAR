@@ -1,10 +1,8 @@
-/*
- * Course: MAD204 - Lab 5
+/* * Course: MAD204-01 Java Development for MA - Lab 5
  * Student: Darshilkumar Karkar (A00203357)
  * Date: 2025-12-11
- * Description: The Room Database instance.
+ * Description: Room database setup for the application.
  */
-
 package com.example.lab5mediafavoritesapp
 
 import android.content.Context
@@ -26,7 +24,7 @@ abstract class FavoritesDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavoritesDatabase::class.java,
-                    "media_favorites_db"
+                    "favorites_database"
                 ).build()
                 INSTANCE = instance
                 instance

@@ -1,33 +1,39 @@
 /*
- * Course: MAD204 - Lab 5
+ * Course: MAD204-01 Java Development for MA - Lab 5
  * Student: Darshilkumar Karkar (A00203357)
  * Date: 2025-12-11
- * Description: Data Access Object for database operations.
+ * Description: Data Access Object (DAO) for the FavoriteMedia entity.
  */
-
 package com.example.lab5mediafavoritesapp
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteDao {
-    // Insert a new media item
-    @Insert
+    /**
+     * Inserts a media item. If it already exists, it's replaced.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(media: FavoriteMedia)
 
-    // Get all favorites (using Flow for live updates)
-    @Query("SELECT * FROM favorites_table ORDER BY timestamp DESC")
-    fun getAllFavorites(): Flow<List<FavoriteMedia>>
-
-    // Get all favorites as a direct List (good for JSON export)
-    @Query("SELECT * FROM favorites_table")
-    suspend fun getAllFavoritesList(): List<FavoriteMedia>
-
-    // Delete a specific item
+    /**
+     * Deletes a media item from the database.
+     */
     @Delete
     suspend fun delete(media: FavoriteMedia)
+
+    /**
+     * Retrieves all favorite media items, ordered by newest first.
+     * Returns a Flow for automatic UI updates.
+     */
+    @Query("SELECT * FROM favorite_media ORDER BY id DESC")
+    fun getAllFavorites(): Flow<List<FavoriteMedia>>
+
+    /**
+     * Retrieves all favorite media items as a simple List.
+     * Used for one-time operations like JSON export.
+     */
+    @Query("SELECT * FROM favorite_media")
+    suspend fun getAllFavoritesAsList(): List<FavoriteMedia>
 }

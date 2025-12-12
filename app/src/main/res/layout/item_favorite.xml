@@ -1,30 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+ * Course: MAD204-01 Java Development for MA - Lab 5
+ * Student: Darshilkumar Karkar (A00203357)
+ * Date: 2025-12-11
+ * Description: Layout for a single item in the favorites RecyclerView.
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp"
-    android:gravity="center_vertical">
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
 
-    <ImageView
-        android:id="@+id/itemIcon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@android:drawable/ic_menu_gallery"/>
-
-    <TextView
-        android:id="@+id/itemType"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingStart="16dp"
-        android:text="Type: Image"
-        android:textSize="20sp" />
+        android:padding="12dp">
 
-    <ImageButton
-        android:id="@+id/btnDelete"
-        android:layout_width="84dp"
-        android:layout_height="81dp"
-        android:background="?attr/selectableItemBackground"
-        android:src="@android:drawable/ic_delete" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/mediaIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/media_type_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorPrimary"
+            tools:src="@drawable/ic_image" />
+
+        <TextView
+            android:id="@+id/mediaUriText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnDelete"
+            app:layout_constraintStart_toEndOf="@id/mediaIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="content://media/external/images/media/1000000123" />
+
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/delete_favorite"
+            android:padding="8dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorError" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
