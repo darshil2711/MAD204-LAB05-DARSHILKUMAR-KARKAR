@@ -2,8 +2,8 @@
 
 **Course:** MAD204-01 Java Development for MA  
 **Lab:** 5  
-**Student Name:** [YOUR NAME HERE]  
-**Student ID:** [YOUR ID HERE]  
+**Student Name:** [Darshilkumar Karkar]  
+**Student ID:** [A00203357]  
 
 ## Overview
 In this lab, you will combine media handling (images & videos) with persistent storage (SQLite/Room) and JSON conversion (GSON). You will build a mini Media Library App that allows users to pick media, mark favorites, save them in a database, and export/import data as JSON.
