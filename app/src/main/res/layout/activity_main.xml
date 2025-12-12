@@ -1,75 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+ * Course: MAD204-01 Java Development for MA - Lab 5
+ * Student: Darshilkumar Karkar (A00203357)
+ * Date: 2025-12-11
+ * Description: Main layout for the Media Favorites App.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="?attr/colorSurfaceContainer"
+    tools:context=".MainActivity">
 
-    <Button
+    <!-- Media Preview Area -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/preview_card"
+        android:layout_width="0dp"
+        android:layout_height="220dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/material_dynamic_neutral95"
+            android:contentDescription="@string/media_preview"
+            android:scaleType="centerCrop"
+            android:visibility="visible"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <VideoView
+            android:id="@+id/videoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Action Buttons Grid using a Guideline for alignment -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPickImage"
-        android:layout_width="wrap_content"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Pick Image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/pick_image"
+        app:icon="@drawable/ic_image"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/preview_card" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPickVideo"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/pick_video"
+        app:icon="@drawable/ic_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="@id/btnPickImage" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPickMultiple"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/pick_multiple"
+        app:icon="@drawable/ic_collection"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnPickImage" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddToFav"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/add_to_favorites"
+        app:icon="@drawable/ic_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="@id/btnPickMultiple" />
+
+    <!-- Export / Import Buttons -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnExport"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/export"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnPickMultiple" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnImport"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/import_json"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="@id/btnExport" />
+
+    <!-- Favorites List -->
+    <TextView
+        android:id="@+id/favorites_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pick Video"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ImageView
-        android:id="@+id/imgPreview"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="#EEE"
-        android:scaleType="fitCenter"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/btnPickImage"
-        android:layout_marginTop="16dp"/>
-
-    <VideoView
-        android:id="@+id/videoPreview"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/btnPickImage"
-        android:layout_marginTop="16dp"/>
-
-    <Button
-        android:id="@+id/btnAddToFav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add to Favorites"
-        app:layout_constraintTop_toBottomOf="@id/imgPreview"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/my_favorites"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnExport" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFavorites"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/btnAddToFav"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="16dp"/>
-
-    <Button
-        android:id="@+id/btnExport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Export JSON"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
-        android:id="@+id/btnImport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Import JSON"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favorites_title"
+        tools:listitem="@layout/item_favorite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
