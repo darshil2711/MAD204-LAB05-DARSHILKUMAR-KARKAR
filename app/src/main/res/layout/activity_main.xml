@@ -56,4 +56,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="16dp"/>
 
+    <Button
+        android:id="@+id/btnExport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Export JSON"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btnImport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Import JSON"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
